@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userIO" class="com.sg.classroster.ui.UserIOConsoleImpl"/>
+
+    <bean id="view" class="com.sg.classroster.ui.ClassRosterView">
+        <constructor-arg ref="userIO"/>
+    </bean>
+
+    <bean id="classRosterDAO" class="com.sg.classroster.dao.ClassRosterDaoFileImpl">
+            <constructor-arg value="roster.txt"/>
+    </bean>
+
+    <bean id="auditDAO" class="com.sg.classroster.dao.ClassRosterAuditDAOFileImpl"/>
+
+    <bean id="serviceLayer" class="com.sg.classroster.service.ClassRosterServiceLayerImpl">
+        <constructor-arg ref="classRosterDAO"/>
+        <constructor-arg ref="auditDAO"/>
+    </bean>
+
+    <bean id="controller" class="com.sg.classroster.controller.ClassRosterController">
+        <constructor-arg ref="serviceLayer"/>
+        <constructor-arg ref="view"/>
+    </bean>
+
+</beans>
